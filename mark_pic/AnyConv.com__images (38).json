@@ -1,0 +1,40 @@
+{
+  "version": "6.1.2",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "defect",
+      "points": [
+        [
+          96.35175879396985,
+          87.1859296482412
+        ],
+        [
+          85.29648241206031,
+          96.73366834170854
+        ],
+        [
+          97.85929648241206,
+          117.8391959798995
+        ],
+        [
+          133.53768844221105,
+          108.29145728643216
+        ],
+        [
+          121.97989949748745,
+          90.7035175879397
+        ]
+      ],
+      "group_id": null,
+      "description": "",
+      "shape_type": "polygon",
+      "flags": {},
+      "mask": null
+    }
+  ],
+  "imagePath": "AnyConv.com__images (38).jpg",
+  "imageData": null,
+  "imageHeight": 200,
+  "imageWidth": 252
+}
