@@ -1,0 +1,45 @@
+# ============================================================
+# ViT-Base / Patch-16 fine-tuning config
+# Apple Disease Classification (4 classes)
+# ============================================================
+
+data:
+  data_root: "data/apple_disease_classification"
+  class_names:
+    - "Normal_Apple"
+    - "Blotch_Apple"
+    - "Rot_Apple"
+    - "Scab_Apple"
+  image_size: 224
+  random_horizontal_flip: true
+  random_vertical_flip: false
+  random_rotation: 20.0
+  color_jitter: true
+  random_erasing: true
+
+model:
+  # HuggingFace model ID — change to vit-large or vit-small as needed
+  backbone: "google/vit-base-patch16-224-in21k"
+  num_classes: 4
+  dropout: 0.1
+  freeze_encoder: false   # set true for linear-probe only
+
+train:
+  epochs: 30
+  batch_size: 16
+  learning_rate: 2.0e-5
+  weight_decay: 1.0e-4
+  lr_scheduler: "cosine"
+  warmup_epochs: 3
+  early_stopping_patience: 8
+  use_class_weights: true   # handles Normal_Apple imbalance
+  grad_clip: 1.0
+  num_workers: 4
+  seed: 42
+
+output:
+  output_dir: "outputs"
+  experiment_name: "vit_base_run"
+  save_best_only: true
+  log_interval: 10
+  use_tensorboard: true

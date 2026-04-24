@@ -1,0 +1,38 @@
+# ============================================================
+# Linear-probe experiment with ViT-Small (faster, fewer params)
+# ============================================================
+
+data:
+  data_root: "data/apple_disease_classification"
+  image_size: 224
+  random_horizontal_flip: true
+  random_vertical_flip: false
+  random_rotation: 15.0
+  color_jitter: true
+  random_erasing: false
+
+model:
+  backbone: "WinKawaks/vit-small-patch16-224"
+  num_classes: 4
+  dropout: 0.2
+  freeze_encoder: true     # linear probe only
+
+train:
+  epochs: 50
+  batch_size: 32
+  learning_rate: 1.0e-4
+  weight_decay: 1.0e-4
+  lr_scheduler: "cosine"
+  warmup_epochs: 5
+  early_stopping_patience: 10
+  use_class_weights: true
+  grad_clip: 1.0
+  num_workers: 4
+  seed: 42
+
+output:
+  output_dir: "outputs"
+  experiment_name: "vit_small_probe"
+  save_best_only: true
+  log_interval: 10
+  use_tensorboard: true
