@@ -1,4 +1,8 @@
-data/
+# Dataset (tracked via Git LFS)
+# Uncomment the line below to ignore locally if LFS is not available
+# /data/
+
+# Proposal PDF
 ECE549_proposal.pdf
 
 # Model outputs & checkpoints
