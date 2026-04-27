@@ -65,7 +65,8 @@ def main() -> None:
 
     # Load model
     logger.info(f"Loading checkpoint: {args.checkpoint}")
-    ckpt = torch.load(args.checkpoint, map_location=device)
+    # PyTorch >=2.6 defaults weights_only=True; our checkpoint stores config objects.
+    ckpt = torch.load(args.checkpoint, map_location=device, weights_only=False)
     model = ViTClassifier(ckpt["config"].model)
     model.load_state_dict(ckpt["model_state_dict"])
     logger.info(f"Model loaded (epoch {ckpt['epoch']})")

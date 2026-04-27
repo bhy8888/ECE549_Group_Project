@@ -37,11 +37,22 @@ class ViTClassifier(nn.Module):
         super().__init__()
         self.cfg = cfg
 
-        # Load pre-trained encoder
-        self.vit = ViTModel.from_pretrained(
-            cfg.backbone,
-            add_pooling_layer=False,   # we extract CLS manually
-        )
+        # Load pre-trained encoder.
+        #
+        # Note: some recent `transformers` attention backends (e.g. SDPA/Flash) may not return
+        # attention tensors even when `output_attentions=True`, which breaks our attention-rollout
+        # visualization. We prefer the eager implementation when available.
+        try:
+            self.vit = ViTModel.from_pretrained(
+                cfg.backbone,
+                add_pooling_layer=False,   # we extract CLS manually
+                attn_implementation="eager",
+            )
+        except TypeError:
+            self.vit = ViTModel.from_pretrained(
+                cfg.backbone,
+                add_pooling_layer=False,   # we extract CLS manually
+            )
 
         hidden_size: int = self.vit.config.hidden_size
 

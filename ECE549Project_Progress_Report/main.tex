@@ -72,12 +72,85 @@ Below is an illustration of the intermediate stages of our approach, demonstrati
     \caption{Intermediate stages of the Traditional CV Pipeline. Left: Original Image. Middle: Raw HSV Mask. Right: Clean Mask after Morphological Opening and Closing.}
 \end{figure}
 
+\vspace{0.5em}
+\textbf{ViT classification (completed):} We also successfully ran a full end-to-end training experiment for the Vision Transformer pipeline using the configuration file \texttt{configs/vit\_base.yaml}. The model backbone is \texttt{google/vit-base-patch16-224-in21k} with input resolution 224, trained for up to 30 epochs with cosine learning-rate scheduling and 3 warmup epochs. We used \textbf{WeightedRandomSampler} and inverse-frequency \textbf{class weights} to mitigate class imbalance, along with aggressive data augmentation (random rotation, color jitter, random erasing).
+
+\textbf{Experiment configuration (vit\_base\_run):}
+\begin{itemize}[noitemsep, topsep=0pt]
+    \item \textbf{Train / Val split:} 382 training images, 120 test images (directory split: \texttt{Train/} and \texttt{Test/}).
+    \item \textbf{Hyperparameters:} epochs=30 (early-stopped at epoch 28), batch size=16, lr=$2\times 10^{-5}$, weight decay=$1\times 10^{-4}$, warmup=3 epochs, seed=42.
+    \item \textbf{Best checkpoint:} epoch 20 with \textbf{val\_acc=0.9000} and \textbf{val\_macro-F1=0.8935}.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{training_curves.png}
+    \caption{Training curves for the ViT pipeline (\texttt{vit\_base\_run}). Early stopping was triggered after epoch 28 with best validation accuracy at epoch 20.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{confusion_matrix.png}
+    \caption{Confusion matrix on the held-out test split for the ViT pipeline (\texttt{vit\_base\_run}).}
+\end{figure}
+
+\vspace{0.5em}
+\textbf{Attention rollout visualization (completed):} To interpret our ViT's decision-making process, we generated attention rollout visualizations (Abnar \& Zuidema, 2020) using our best checkpoint. We curated 12 representative test images including both strong successes and notable failures (often under challenging lighting, such as shadows or specular highlights). Each visualization contains three panels: original image, attention heatmap, and an overlay. A CSV manifest recording \texttt{(image, true label, predicted label, confidence)} is included for reproducibility.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{attn_case_correct.png}
+    \caption{Attention rollout example (correct, high-confidence).}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{attn_case_wrong_hi_conf.png}
+    \caption{Attention rollout example (incorrect, high-confidence). Such cases will be analyzed to identify failure modes related to texture confusion and lighting artifacts.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{attn_case_wrong_ambiguous.png}
+    \caption{Attention rollout example (incorrect, lower-confidence). These ambiguous cases often arise under challenging visual conditions and motivate further robustness improvements.}
+\end{figure}
+
 % =========================================================
 \section*{6. Current Reservations and Questions}
 % =========================================================
 The baseline mIoU of 0.2682 quantitatively exposes the severe limitations of fixed-threshold HSV segmentation in real-world scenarios. As observed in our qualitative outputs (see Figure 1), the algorithm is highly susceptible to natural shadows and specular reflections on the waxy surface of the apples, leading to massive false positives. 
 
-This obstacle validates our planned next steps: we must implement adaptive thresholding or watershed algorithms to improve the CV baseline's robustness against dynamic lighting. Furthermore, it reinforces the necessity of exploring the ViT pipeline, which leverages self-attention to capture deeper semantic features rather than relying strictly on raw pixel colors.
+This obstacle validates our planned next steps: we must implement adaptive thresholding or watershed algorithms to improve the CV baseline's robustness against dynamic lighting. Furthermore, our initial ViT results indicate that the learning-based approach is promising on this dataset, motivating a deeper comparative analysis and interpretability study.
+
+\vspace{0.5em}
+\textbf{Gap analysis vs. proposal commitments (what remains):}
+\begin{itemize}[noitemsep, topsep=0pt]
+    \item \textbf{Attention map visualization (maximum goal):} Completed (initial). Next, we will expand qualitative analysis by grouping failure cases (shadow/specular highlight, texture confusion) and summarizing patterns.
+    \item \textbf{Traditional CV robustness improvements:} Completed (initial). We implemented two robustness-motivated variants (adaptive thresholding on the V channel with CLAHE; and a watershed refinement). On our annotated subset, these initial variants did not outperform the fixed HSV baseline, highlighting the difficulty of tuning rule-based segmentation under diverse lighting.
+    \item \textbf{Unified grading logic (maximum goal):} The proposal described a grading system (Premium / Grade I / Reject) integrating outputs from both pipelines (defect area ratio + class prediction). This integration and its quantitative evaluation are not yet completed.
+    \item \textbf{Comprehensive comparative study:} We have initial results for both pipelines, but we still need a systematic comparison (e.g., per-class error analysis, qualitative failure cases, and ablations such as augmentation strength and sampler/class-weight toggles).
+    \item \textbf{External validity / robustness checks (optional stretch):} Evaluate on additional data or controlled perturbations (lighting changes, blur, color shifts) to stress-test the CV baseline and the ViT model.
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{CV baseline robustness attempt (completed):} We benchmarked three traditional CV segmentation variants on the manually annotated subset (\texttt{mark\_pic/}; 40 image-mask pairs):
+\begin{itemize}[noitemsep, topsep=0pt]
+    \item \textbf{HSV fixed-threshold + morphology (baseline):} mean IoU = \textbf{0.2802}
+    \item \textbf{Adaptive V-threshold (CLAHE + local/global threshold) + morphology:} mean IoU = 0.1048
+    \item \textbf{Watershed refinement (built on adaptive mask):} mean IoU = 0.0915
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.98\textwidth]{cv_case_hard_1.png}
+    \caption{Qualitative comparison on a challenging sample (overlay panels). Top row: image, GT overlay/mask. Bottom row: HSV baseline, adaptive, and watershed predictions with their IoU scores.}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.98\textwidth]{cv_case_hard_2.png}
+    \caption{Second qualitative comparison example for the CV segmentation variants.}
+\end{figure}
 
 % =========================================================
 \section*{7. References}

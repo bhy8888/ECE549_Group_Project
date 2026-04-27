@@ -32,7 +32,7 @@ def calculate_iou(pred_mask: np.ndarray, gt_mask: np.ndarray) -> float:
     return float(intersection) / float(union)
 
 
-def evaluate_directory(mask_dir: str | Path) -> Tuple[float, int]:
+def evaluate_directory(mask_dir: str | Path, method: str = "hsv") -> Tuple[float, int]:
     """
     Evaluate all (image, mask) pairs in a directory.
 
@@ -66,7 +66,7 @@ def evaluate_directory(mask_dir: str | Path) -> Tuple[float, int]:
         if img is None or gt_mask is None:
             continue
 
-        _, clean_mask = segment_defects(img)
+        _, clean_mask = segment_defects(img, method=method)
         iou = calculate_iou(clean_mask, gt_mask)
         total_iou += iou
         count += 1
@@ -79,10 +79,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate CV baseline IoU")
     parser.add_argument("--mask_dir", type=str, default="mark_pic",
                         help="Directory containing images and _mask.png files")
+    parser.add_argument("--method", type=str, default="hsv",
+                        choices=["hsv", "adaptive", "watershed"],
+                        help="Segmentation method to evaluate")
     args = parser.parse_args()
 
     print("Starting traditional CV baseline evaluation…\n")
-    mean_iou, count, results = evaluate_directory(args.mask_dir)
+    mean_iou, count, results = evaluate_directory(args.mask_dir, method=args.method)
 
     for name, iou in results[:10]:
         print(f"  {name:40s}  IoU = {iou:.4f}")
@@ -90,7 +93,7 @@ def main() -> None:
         print(f"  … ({len(results) - 10} more)")
 
     print(f"\nEvaluated {count} image(s).")
-    print(f"Mean IoU (Traditional CV Baseline): {mean_iou:.4f}")
+    print(f"Mean IoU (Traditional CV, method={args.method}): {mean_iou:.4f}")
 
 
 if __name__ == "__main__":

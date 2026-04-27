@@ -1,0 +1,13 @@
+image_path,true_class,pred_class,confidence
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__download (10).jpg,Scab_Apple,Scab_Apple,0.999760
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__images (3).jpg,Scab_Apple,Scab_Apple,0.999567
+data/apple_disease_classification/Test/Blotch_Apple/133.jpg,Blotch_Apple,Blotch_Apple,0.999563
+data/apple_disease_classification/Test/Rot_Apple/ey1xed.jpg,Rot_Apple,Rot_Apple,0.999551
+data/apple_disease_classification/Test/Rot_Apple/jhy6ea.jpg,Rot_Apple,Rot_Apple,0.999498
+data/apple_disease_classification/Test/Rot_Apple/e3afrg.jpg,Rot_Apple,Rot_Apple,0.999453
+data/apple_disease_classification/Test/Blotch_Apple/134.jpg,Blotch_Apple,Scab_Apple,0.999632
+data/apple_disease_classification/Test/Blotch_Apple/135.jpg,Blotch_Apple,Scab_Apple,0.999216
+data/apple_disease_classification/Test/Blotch_Apple/126.jpg,Blotch_Apple,Scab_Apple,0.995860
+data/apple_disease_classification/Test/Blotch_Apple/136.jpg,Blotch_Apple,Scab_Apple,0.514351
+data/apple_disease_classification/Test/Normal_Apple/22.jpg,Normal_Apple,Scab_Apple,0.529810
+data/apple_disease_classification/Test/Blotch_Apple/137.jpg,Blotch_Apple,Scab_Apple,0.728373
