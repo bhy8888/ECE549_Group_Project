@@ -1,0 +1,91 @@
+\documentclass[11pt,letterpaper]{article}
+
+% ====== Packages ======
+\usepackage[margin=1in]{geometry}
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+
+% ====== Formatting overrides ======
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+% ====== Title and Header ======
+\title{\vspace{-1.5cm}\textbf{CS543/ECE549 Project Progress Report}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\vspace{-2cm} 
+
+% =========================================================
+\section*{1. Updated Statement of Project Definition and Goals}
+% =========================================================
+Our core objective remains unchanged: to develop a robust automated system for detecting and quantifying surface defects (bruises, rots, scabs) on fruits for quality grading. There are no modifications to our minimum or maximum goals. We are currently on track with our initial timeline, having successfully implemented the traditional Computer Vision (CV) baseline to benchmark against our planned Vision Transformer (ViT) pipeline.
+
+% =========================================================
+\section*{2. Current Member Roles and Collaboration Strategy}
+% =========================================================
+\begin{itemize}[noitemsep, topsep=0pt]
+    \item \textbf{Hongbin Yang:} Has successfully completed the Traditional CV baseline implementation, downloaded and split the dataset, manually annotated 50 test images for pixel-level ground truth, and developed the automated Intersection over Union (IoU) evaluation script. 
+    \item \textbf{Yanjun Qin:} Currently responsible for formatting the dataset for Transformer inputs, setting up the ViT model training pipeline (PyTorch/Hugging Face), and preparing the cloud computing environment.
+\end{itemize}
+\textit{Collaboration:} The team continues to utilize GitHub for code versioning. Additionally, we hold a weekly synchronization meeting every Saturday to discuss progress, troubleshoot technical issues, and plan the division of labor. We have also established a standardized testing split to ensure both pipelines are evaluated on the exact same images.
+
+% =========================================================
+\section*{3. Proposed Approach}
+% =========================================================
+As outlined in our proposal, we are actively developing two pipelines. The Traditional CV baseline has been fully implemented in Python using the OpenCV library [1]. The steps are as follows:
+\begin{enumerate}[noitemsep, topsep=0pt]
+    \item \textbf{Color Space Conversion:} Convert input BGR images to the HSV color space to decouple intensity from color information.
+    \item \textbf{Thresholding:} Apply hard-coded HSV bounds to isolate potential defect areas (e.g., darker regions for Rot and Scab).
+    \item \textbf{Morphological Noise Reduction:} Apply a Morphological Opening operation (using a 5x5 kernel) to remove isolated background noise, followed by a Closing operation to fill small holes within the segmented defect regions.
+\end{enumerate}
+For the Innovation Pipeline, we will utilize a pre-trained Vision Transformer (e.g., ViT-Base) [2], relying on Transfer Learning to perform 4-class image classification. 
+
+% =========================================================
+\section*{4. Data}
+% =========================================================
+We are utilizing the publicly available \href{https://www.kaggle.com/datasets/kaivalyashah/apple-disease-detection}{Apple Fruit Disease Dataset} from Kaggle. The data collection process is complete. The dataset has been rigorously split to prevent data leakage:
+\begin{itemize}[noitemsep, topsep=0pt]
+    \item \textbf{Training Set (386 images):} Blotch (117), Normal (68), Rot (115), Scab (86).
+    \item \textbf{Testing Set:} Maintained separately for final evaluation.
+\end{itemize}
+\textbf{Annotations:} To quantitatively evaluate the traditional CV baseline's segmentation accuracy, we strategically sampled a representative subset of 50 images from the testing set. Specifically, we selected 15 images from each of the three defect classes (Blotch, Rot, Scab) and 5 images from the Normal class. The inclusion of the 5 healthy apples acts as a crucial control group to evaluate false positives, ensuring our algorithm does not hallucinate defects on healthy fruit skin. We manually annotated these images using LabelMe to generate pixel-level binary masks (Healthy vs. Defective). These manually crafted masks serve as our absolute Ground Truth.
+
+% =========================================================
+\section*{5. Initial Results}
+% =========================================================
+We have successfully implemented the initial CV steps and the evaluation metrics. We ran our baseline script across the 50 manually annotated Ground Truth masks. The baseline achieved a \textbf{Mean Intersection over Union (mIoU) of 0.2682}. 
+
+Below is an illustration of the intermediate stages of our approach, demonstrating the transition from the original image to the raw HSV mask, and finally to the morphologically cleaned mask.
+
+\begin{figure}[h]
+    \centering
+    % REPLACE 'figure_1.png' WITH THE ACTUAL FILENAME UPLOADED TO OVERLEAF
+    \includegraphics[width=0.9\textwidth]{figure_1.png}
+    \caption{Intermediate stages of the Traditional CV Pipeline. Left: Original Image. Middle: Raw HSV Mask. Right: Clean Mask after Morphological Opening and Closing.}
+\end{figure}
+
+% =========================================================
+\section*{6. Current Reservations and Questions}
+% =========================================================
+The baseline mIoU of 0.2682 quantitatively exposes the severe limitations of fixed-threshold HSV segmentation in real-world scenarios. As observed in our qualitative outputs (see Figure 1), the algorithm is highly susceptible to natural shadows and specular reflections on the waxy surface of the apples, leading to massive false positives. 
+
+This obstacle validates our planned next steps: we must implement adaptive thresholding or watershed algorithms to improve the CV baseline's robustness against dynamic lighting. Furthermore, it reinforces the necessity of exploring the ViT pipeline, which leverages self-attention to capture deeper semantic features rather than relying strictly on raw pixel colors.
+
+% =========================================================
+\section*{7. References}
+% =========================================================
+\begin{enumerate}[label={[\arabic*]}, noitemsep, topsep=0pt]
+    \item Bradski, G. (2000). \textit{The OpenCV Library}. Dr. Dobb's Journal of Software Tools.
+    
+    \item Dosovitskiy, A., et al. (2020). \textit{An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale}. ICLR 2021.
+\end{enumerate}
+
+\end{document}
