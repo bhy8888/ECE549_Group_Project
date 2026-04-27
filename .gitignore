@@ -25,3 +25,5 @@ build/
 # Editor
 .vscode/
 .idea/
+
+.venv/
