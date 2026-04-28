@@ -15,7 +15,7 @@
 
 % ====== Title and Header ======
 \title{\vspace{-1.5cm}\textbf{CS543/ECE549 Project Progress Report}}
-\author{}
+\author{\textbf{Yanjun Qin} \and \textbf{Hongbin Yang}}
 \date{}
 
 \begin{document}
@@ -26,27 +26,42 @@
 % =========================================================
 \section*{1. Updated Statement of Project Definition and Goals}
 % =========================================================
-Our core objective remains unchanged: to develop a robust automated system for detecting and quantifying surface defects (bruises, rots, scabs) on fruits for quality grading. There are no modifications to our minimum or maximum goals. We are currently on track with our initial timeline, having successfully implemented the traditional Computer Vision (CV) baseline to benchmark against our planned Vision Transformer (ViT) pipeline.
+Our core objective remains unchanged: to develop a robust automated system for detecting and quantifying surface defects on fruits (e.g., bruises/rots/scabs) for quality grading. Our minimum goal is to implement (i) a traditional Computer Vision (CV) baseline for binary defect segmentation and (ii) a Vision Transformer (ViT) pipeline for 4-class disease classification. Our maximum goal is to (i) interpret model behavior via attention visualization and (ii) implement a unified grading logic (Premium / Grade I / Reject) that integrates defect area ratio and class prediction.
+
+\textbf{Update since proposal:} We have completed the end-to-end ViT training pipeline and initial attention rollout visualizations, and we have implemented multiple CV segmentation variants with quantitative IoU evaluation on a manually annotated subset. No scope changes were made; rather, the progress confirms that the classical baseline is sensitive to lighting artifacts, motivating deeper analysis and robustness improvements.
 
 % =========================================================
 \section*{2. Current Member Roles and Collaboration Strategy}
 % =========================================================
 \begin{itemize}[noitemsep, topsep=0pt]
-    \item \textbf{Hongbin Yang:} Has successfully completed the Traditional CV baseline implementation, downloaded and split the dataset, manually annotated 50 test images for pixel-level ground truth, and developed the automated Intersection over Union (IoU) evaluation script. 
-    \item \textbf{Yanjun Qin:} Currently responsible for formatting the dataset for Transformer inputs, setting up the ViT model training pipeline (PyTorch/Hugging Face), and preparing the cloud computing environment.
+    \item \textbf{Hongbin Yang:} Traditional CV pipeline (HSV thresholding + morphology) and segmentation evaluation. Responsible for dataset preprocessing, mask annotation workflow (LabelMe), and IoU evaluation on the manually annotated subset.
+    \item \textbf{Yanjun Qin:} Deep learning pipeline (ViT fine-tuning) including data formatting for transformer inputs, training/evaluation scripts, and attention rollout visualization for interpretability.
 \end{itemize}
-\textit{Collaboration:} The team continues to utilize GitHub for code versioning. Additionally, we hold a weekly synchronization meeting every Saturday to discuss progress, troubleshoot technical issues, and plan the division of labor. We have also established a standardized testing split to ensure both pipelines are evaluated on the exact same images.
+\textit{Collaboration:} We use GitHub for code versioning and shared experiment artifacts. We hold a weekly synchronization meeting (Saturday) to review results and decide next experiments. We maintain a fixed dataset split (Train/Test) to avoid data leakage, and keep a dedicated folder (\texttt{mark\_pic/}) for image--mask pairs used in segmentation evaluation.
 
 % =========================================================
 \section*{3. Proposed Approach}
 % =========================================================
-As outlined in our proposal, we are actively developing two pipelines. The Traditional CV baseline has been fully implemented in Python using the OpenCV library [1]. The steps are as follows:
+As outlined in our proposal, we develop two complementary pipelines and compare them under a unified evaluation protocol.
+
+\textbf{(A) Traditional CV pipeline (binary defect segmentation):} Implemented in Python using OpenCV [1]. The segmentation is defined at pixel level (Healthy vs. Defective). Our baseline steps are:
 \begin{enumerate}[noitemsep, topsep=0pt]
     \item \textbf{Color Space Conversion:} Convert input BGR images to the HSV color space to decouple intensity from color information.
     \item \textbf{Thresholding:} Apply hard-coded HSV bounds to isolate potential defect areas (e.g., darker regions for Rot and Scab).
     \item \textbf{Morphological Noise Reduction:} Apply a Morphological Opening operation (using a 5x5 kernel) to remove isolated background noise, followed by a Closing operation to fill small holes within the segmented defect regions.
 \end{enumerate}
-For the Innovation Pipeline, we will utilize a pre-trained Vision Transformer (e.g., ViT-Base) [2], relying on Transfer Learning to perform 4-class image classification. 
+To address the key limitation in our proposal (lighting sensitivity), we also implemented two robustness-motivated variants: (i) adaptive thresholding on the V channel with CLAHE contrast normalization, and (ii) watershed-based refinement. These variants are evaluated with the same IoU protocol.
+
+\textbf{(B) ViT pipeline (4-class classification):} We fine-tune a pre-trained Vision Transformer (ViT-Base, Patch-16) [2] using transfer learning. The pipeline is:
+\begin{enumerate}[noitemsep, topsep=0pt]
+    \item \textbf{Preprocessing:} resize to $224\times 224$ and apply train-time augmentation (rotation, color jitter, random erasing).
+    \item \textbf{Model:} ViT encoder + classification head for 4 classes (Normal/Blotch/Rot/Scab).
+    \item \textbf{Training:} optimize cross-entropy with cosine LR schedule and warmup; mitigate imbalance via WeightedRandomSampler and class weights.
+    \item \textbf{Evaluation:} report Accuracy, macro-F1, and a confusion matrix on the held-out test split.
+    \item \textbf{Interpretability:} compute attention rollout maps [3] to visualize which image regions contribute most to the [CLS] token aggregation.
+\end{enumerate}
+
+\textbf{Planned integration (grading):} Our maximum-goal grading system will combine (i) defect area ratio from the CV segmentation mask and (ii) the ViT class prediction to produce a final grade (Premium / Grade I / Reject). This integration and its evaluation remain in progress.
 
 % =========================================================
 \section*{4. Data}
@@ -56,7 +71,7 @@ We are utilizing the publicly available \href{https://www.kaggle.com/datasets/ka
     \item \textbf{Training Set (386 images):} Blotch (117), Normal (68), Rot (115), Scab (86).
     \item \textbf{Testing Set:} Maintained separately for final evaluation.
 \end{itemize}
-\textbf{Annotations:} To quantitatively evaluate the traditional CV baseline's segmentation accuracy, we strategically sampled a representative subset of 50 images from the testing set. Specifically, we selected 15 images from each of the three defect classes (Blotch, Rot, Scab) and 5 images from the Normal class. The inclusion of the 5 healthy apples acts as a crucial control group to evaluate false positives, ensuring our algorithm does not hallucinate defects on healthy fruit skin. We manually annotated these images using LabelMe to generate pixel-level binary masks (Healthy vs. Defective). These manually crafted masks serve as our absolute Ground Truth.
+\textbf{Annotations:} For pixel-level evaluation of the CV segmentation pipeline, we manually annotated a subset of test images using LabelMe to create binary masks (Healthy vs. Defective). We planned 50 images (15 per defect class and 5 Normal as a control group for false positives); at the time of this report, \textbf{40 image--mask pairs} are available in our evaluation folder and are used for quantitative IoU benchmarking.
 
 % =========================================================
 \section*{5. Initial Results}
@@ -73,11 +88,11 @@ Below is an illustration of the intermediate stages of our approach, demonstrati
 \end{figure}
 
 \vspace{0.5em}
-\textbf{ViT classification (completed):} We also successfully ran a full end-to-end training experiment for the Vision Transformer pipeline using the configuration file \texttt{configs/vit\_base.yaml}. The model backbone is \texttt{google/vit-base-patch16-224-in21k} with input resolution 224, trained for up to 30 epochs with cosine learning-rate scheduling and 3 warmup epochs. We used \textbf{WeightedRandomSampler} and inverse-frequency \textbf{class weights} to mitigate class imbalance, along with aggressive data augmentation (random rotation, color jitter, random erasing).
+\textbf{ViT classification (completed):} We successfully ran a full end-to-end training experiment for the Vision Transformer (ViT) pipeline for 4-class disease classification. We fine-tuned a \textbf{ViT-Base} model (Patch-16, input resolution $224\times 224$) using transfer learning. To mitigate class imbalance, we used a \textbf{WeightedRandomSampler} and inverse-frequency \textbf{class weights}. We also applied aggressive data augmentation (random rotation, color jitter, random erasing) to reduce overfitting on the limited dataset.
 
 \textbf{Experiment configuration (vit\_base\_run):}
 \begin{itemize}[noitemsep, topsep=0pt]
-    \item \textbf{Train / Val split:} 382 training images, 120 test images (directory split: \texttt{Train/} and \texttt{Test/}).
+    \item \textbf{Train / Test split:} 382 training images, 120 test images.
     \item \textbf{Hyperparameters:} epochs=30 (early-stopped at epoch 28), batch size=16, lr=$2\times 10^{-5}$, weight decay=$1\times 10^{-4}$, warmup=3 epochs, seed=42.
     \item \textbf{Best checkpoint:} epoch 20 with \textbf{val\_acc=0.9000} and \textbf{val\_macro-F1=0.8935}.
 \end{itemize}
@@ -99,20 +114,12 @@ Below is an illustration of the intermediate stages of our approach, demonstrati
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.95\textwidth]{attn_case_correct.png}
-    \caption{Attention rollout example (correct, high-confidence).}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.95\textwidth]{attn_case_wrong_hi_conf.png}
-    \caption{Attention rollout example (incorrect, high-confidence). Such cases will be analyzed to identify failure modes related to texture confusion and lighting artifacts.}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.95\textwidth]{attn_case_wrong_ambiguous.png}
-    \caption{Attention rollout example (incorrect, lower-confidence). These ambiguous cases often arise under challenging visual conditions and motivate further robustness improvements.}
+    \includegraphics[width=0.95\textwidth]{attn_good_correct_24.png}
+    \vspace{0.2em}
+    \includegraphics[width=0.95\textwidth]{attn_good_correct_33.png}
+    \vspace{0.2em}
+    \includegraphics[width=0.95\textwidth]{attn_good_correct_54.png}
+    \caption{Attention rollout examples (correct classifications). Each figure shows original image, attention heatmap, and overlay. These examples illustrate that the model can focus on the fruit region under varied backgrounds, though failure cases still exist and are under further analysis.}
 \end{figure}
 
 % =========================================================
@@ -159,6 +166,10 @@ This obstacle validates our planned next steps: we must implement adaptive thres
     \item Bradski, G. (2000). \textit{The OpenCV Library}. Dr. Dobb's Journal of Software Tools.
     
     \item Dosovitskiy, A., et al. (2020). \textit{An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale}. ICLR 2021.
+
+    \item Abnar, S., \& Zuidema, W. (2020). \textit{Quantifying Attention Flow in Transformers}. ACL 2020.
+
+    \item Kaggle. \textit{Apple Fruit Disease Dataset}. Available at: \href{https://www.kaggle.com/datasets/kaivalyashah/apple-disease-detection}{https://www.kaggle.com/datasets/kaivalyashah/apple-disease-detection}.
 \end{enumerate}
 
 \end{document}

@@ -1,0 +1,101 @@
+image_path,true_class,pred_class,confidence
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__download (10).jpg,Scab_Apple,Scab_Apple,0.999760
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__images (3).jpg,Scab_Apple,Scab_Apple,0.999567
+data/apple_disease_classification/Test/Blotch_Apple/133.jpg,Blotch_Apple,Blotch_Apple,0.999563
+data/apple_disease_classification/Test/Rot_Apple/ey1xed.jpg,Rot_Apple,Rot_Apple,0.999551
+data/apple_disease_classification/Test/Rot_Apple/jhy6ea.jpg,Rot_Apple,Rot_Apple,0.999498
+data/apple_disease_classification/Test/Rot_Apple/e3afrg.jpg,Rot_Apple,Rot_Apple,0.999453
+data/apple_disease_classification/Test/Rot_Apple/rotting-apples-decay-food-waste-260nw-1762452767.jpg,Rot_Apple,Rot_Apple,0.999444
+data/apple_disease_classification/Test/Rot_Apple/2ckghhj.jpg,Rot_Apple,Rot_Apple,0.999421
+data/apple_disease_classification/Test/Rot_Apple/2f40jff.jpg,Rot_Apple,Rot_Apple,0.999413
+data/apple_disease_classification/Test/Scab_Apple/ad3gfw.jpg,Scab_Apple,Scab_Apple,0.999398
+data/apple_disease_classification/Test/Rot_Apple/kjbwfk.jpg,Rot_Apple,Rot_Apple,0.999390
+data/apple_disease_classification/Test/Normal_Apple/images (6).jpg,Normal_Apple,Normal_Apple,0.999386
+data/apple_disease_classification/Test/Rot_Apple/rotten-apple-isolated-on-white-260nw-65162884.jpg,Rot_Apple,Rot_Apple,0.999358
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__images (50).jpg,Scab_Apple,Scab_Apple,0.999324
+data/apple_disease_classification/Test/Rot_Apple/rotten-apple-on-white-isolated-260nw-1938690064.jpg,Rot_Apple,Rot_Apple,0.999306
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__images (74).jpg,Scab_Apple,Scab_Apple,0.999287
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__images (78).jpg,Scab_Apple,Scab_Apple,0.999282
+data/apple_disease_classification/Test/Scab_Apple/DSC_3705-1q4ivwe.jpg,Scab_Apple,Scab_Apple,0.999252
+data/apple_disease_classification/Test/Rot_Apple/tx04wa.jpg,Rot_Apple,Rot_Apple,0.999205
+data/apple_disease_classification/Test/Rot_Apple/2d0wf7n.jpg,Rot_Apple,Rot_Apple,0.999134
+data/apple_disease_classification/Test/Rot_Apple/t00grw.jpg,Rot_Apple,Rot_Apple,0.999122
+data/apple_disease_classification/Test/Normal_Apple/46.jpg,Normal_Apple,Normal_Apple,0.999049
+data/apple_disease_classification/Test/Rot_Apple/egpynx (1).jpg,Rot_Apple,Rot_Apple,0.999047
+data/apple_disease_classification/Test/Rot_Apple/wilted-rotten-apple-isolated-on-260nw-338996867.jpg,Rot_Apple,Rot_Apple,0.998952
+data/apple_disease_classification/Test/Rot_Apple/istockphoto-878751294-612x612.jpg,Rot_Apple,Rot_Apple,0.998797
+data/apple_disease_classification/Test/Rot_Apple/istockphoto-500392531-612x612.jpg,Rot_Apple,Rot_Apple,0.998787
+data/apple_disease_classification/Test/Normal_Apple/images (5).jpg,Normal_Apple,Normal_Apple,0.998628
+data/apple_disease_classification/Test/Scab_Apple/dw027a.jpg,Scab_Apple,Scab_Apple,0.998623
+data/apple_disease_classification/Test/Rot_Apple/istockphoto-173903961-612x612.jpg,Rot_Apple,Rot_Apple,0.998563
+data/apple_disease_classification/Test/Rot_Apple/rotten-apple-big-hole-on-260nw-671627224.jpg,Rot_Apple,Rot_Apple,0.998556
+data/apple_disease_classification/Test/Scab_Apple/br31ba.jpg,Scab_Apple,Scab_Apple,0.998512
+data/apple_disease_classification/Test/Normal_Apple/images (3).jpg,Normal_Apple,Normal_Apple,0.998495
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__images (99).jpg,Scab_Apple,Scab_Apple,0.998313
+data/apple_disease_classification/Test/Blotch_Apple/130.jpg,Blotch_Apple,Blotch_Apple,0.998215
+data/apple_disease_classification/Test/Blotch_Apple/140.jpg,Blotch_Apple,Blotch_Apple,0.998151
+data/apple_disease_classification/Test/Rot_Apple/rtw6ft.jpg,Rot_Apple,Rot_Apple,0.998110
+data/apple_disease_classification/Test/Scab_Apple/2c4x4g0.jpg,Scab_Apple,Scab_Apple,0.998052
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__download (4).jpg,Scab_Apple,Scab_Apple,0.998046
+data/apple_disease_classification/Test/Blotch_Apple/144.jpg,Blotch_Apple,Blotch_Apple,0.997969
+data/apple_disease_classification/Test/Rot_Apple/wwtx1b.jpg,Rot_Apple,Rot_Apple,0.997863
+data/apple_disease_classification/Test/Rot_Apple/bwct8k.jpg,Rot_Apple,Rot_Apple,0.997849
+data/apple_disease_classification/Test/Blotch_Apple/148.jpg,Blotch_Apple,Blotch_Apple,0.997746
+data/apple_disease_classification/Test/Rot_Apple/2apbkfh.jpg,Rot_Apple,Rot_Apple,0.997724
+data/apple_disease_classification/Test/Rot_Apple/2c3agy6.jpg,Rot_Apple,Rot_Apple,0.997724
+data/apple_disease_classification/Test/Rot_Apple/2c45k83.jpg,Rot_Apple,Rot_Apple,0.997681
+data/apple_disease_classification/Test/Rot_Apple/td97ab.jpg,Rot_Apple,Rot_Apple,0.997668
+data/apple_disease_classification/Test/Blotch_Apple/138.jpg,Blotch_Apple,Blotch_Apple,0.997568
+data/apple_disease_classification/Test/Normal_Apple/45.jpg,Normal_Apple,Normal_Apple,0.997244
+data/apple_disease_classification/Test/Blotch_Apple/143.jpg,Blotch_Apple,Blotch_Apple,0.997169
+data/apple_disease_classification/Test/Rot_Apple/2an7852.jpg,Rot_Apple,Rot_Apple,0.997158
+data/apple_disease_classification/Test/Blotch_Apple/149.jpg,Blotch_Apple,Blotch_Apple,0.996992
+data/apple_disease_classification/Test/Rot_Apple/2an77pp.jpg,Rot_Apple,Rot_Apple,0.996628
+data/apple_disease_classification/Test/Rot_Apple/aybx08.jpg,Rot_Apple,Rot_Apple,0.996592
+data/apple_disease_classification/Test/Rot_Apple/2dcmk9m.jpg,Rot_Apple,Rot_Apple,0.996210
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__images (33).jpg,Scab_Apple,Scab_Apple,0.996082
+data/apple_disease_classification/Test/Normal_Apple/80.jpg,Normal_Apple,Normal_Apple,0.995745
+data/apple_disease_classification/Test/Rot_Apple/a2b2p0.jpg,Rot_Apple,Rot_Apple,0.995170
+data/apple_disease_classification/Test/Scab_Apple/wkpmtc.jpg,Scab_Apple,Scab_Apple,0.995070
+data/apple_disease_classification/Test/Rot_Apple/istockphoto-654588270-612x612.jpg,Rot_Apple,Rot_Apple,0.994489
+data/apple_disease_classification/Test/Blotch_Apple/121.jpg,Blotch_Apple,Blotch_Apple,0.994202
+data/apple_disease_classification/Test/Blotch_Apple/146.jpg,Blotch_Apple,Blotch_Apple,0.993860
+data/apple_disease_classification/Test/Normal_Apple/58.jpg,Normal_Apple,Normal_Apple,0.993711
+data/apple_disease_classification/Test/Rot_Apple/istockphoto-859980682-612x612.jpg,Rot_Apple,Rot_Apple,0.993030
+data/apple_disease_classification/Test/Rot_Apple/ar3jth.jpg,Rot_Apple,Rot_Apple,0.992523
+data/apple_disease_classification/Test/Rot_Apple/fj4tej.jpg,Rot_Apple,Rot_Apple,0.992395
+data/apple_disease_classification/Test/Normal_Apple/56.jpg,Normal_Apple,Normal_Apple,0.991991
+data/apple_disease_classification/Test/Blotch_Apple/132.jpg,Blotch_Apple,Blotch_Apple,0.988448
+data/apple_disease_classification/Test/Blotch_Apple/128.jpg,Blotch_Apple,Blotch_Apple,0.986996
+data/apple_disease_classification/Test/Normal_Apple/9.jpg,Normal_Apple,Normal_Apple,0.986947
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__images (90).jpg,Scab_Apple,Scab_Apple,0.986001
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__images (95).jpg,Scab_Apple,Scab_Apple,0.985674
+data/apple_disease_classification/Test/Normal_Apple/21.jpg,Normal_Apple,Normal_Apple,0.985416
+data/apple_disease_classification/Test/Normal_Apple/34.jpg,Normal_Apple,Normal_Apple,0.983216
+data/apple_disease_classification/Test/Normal_Apple/32.jpg,Normal_Apple,Normal_Apple,0.981212
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__images (38).jpg,Scab_Apple,Scab_Apple,0.979201
+data/apple_disease_classification/Test/Scab_Apple/pg4fhm.jpg,Scab_Apple,Scab_Apple,0.977655
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__images (58).jpg,Scab_Apple,Scab_Apple,0.976107
+data/apple_disease_classification/Test/Blotch_Apple/122.jpg,Blotch_Apple,Blotch_Apple,0.975605
+data/apple_disease_classification/Test/Rot_Apple/2bnf8pw.jpg,Rot_Apple,Rot_Apple,0.974708
+data/apple_disease_classification/Test/Normal_Apple/81.jpg,Normal_Apple,Normal_Apple,0.957372
+data/apple_disease_classification/Test/Blotch_Apple/124.jpg,Blotch_Apple,Blotch_Apple,0.955170
+data/apple_disease_classification/Test/Normal_Apple/33.jpg,Normal_Apple,Normal_Apple,0.950778
+data/apple_disease_classification/Test/Normal_Apple/70.jpg,Normal_Apple,Normal_Apple,0.945332
+data/apple_disease_classification/Test/Normal_Apple/44.jpg,Normal_Apple,Normal_Apple,0.942107
+data/apple_disease_classification/Test/Scab_Apple/F4134795-7A74-49F2-AD2D-C359C79B0852.jpeg,Scab_Apple,Scab_Apple,0.933118
+data/apple_disease_classification/Test/Blotch_Apple/129.jpg,Blotch_Apple,Blotch_Apple,0.923252
+data/apple_disease_classification/Test/Blotch_Apple/127.jpg,Blotch_Apple,Blotch_Apple,0.922803
+data/apple_disease_classification/Test/Blotch_Apple/145.jpg,Blotch_Apple,Blotch_Apple,0.900088
+data/apple_disease_classification/Test/Scab_Apple/rp3fh8.jpg,Scab_Apple,Scab_Apple,0.896082
+data/apple_disease_classification/Test/Normal_Apple/10.jpg,Normal_Apple,Normal_Apple,0.881559
+data/apple_disease_classification/Test/Blotch_Apple/120.jpg,Blotch_Apple,Blotch_Apple,0.878924
+data/apple_disease_classification/Test/Rot_Apple/t83m2k.jpg,Rot_Apple,Rot_Apple,0.861962
+data/apple_disease_classification/Test/Normal_Apple/11.jpg,Normal_Apple,Normal_Apple,0.840528
+data/apple_disease_classification/Test/Scab_Apple/esy-001419324.jpg,Scab_Apple,Scab_Apple,0.818972
+data/apple_disease_classification/Test/Normal_Apple/23.jpg,Normal_Apple,Normal_Apple,0.778892
+data/apple_disease_classification/Test/Scab_Apple/17-0814-tree_unknownC_img4-26e35a1-1024x683.jpg,Scab_Apple,Scab_Apple,0.771517
+data/apple_disease_classification/Test/Blotch_Apple/125.jpg,Blotch_Apple,Blotch_Apple,0.760154
+data/apple_disease_classification/Test/Blotch_Apple/139.jpg,Blotch_Apple,Blotch_Apple,0.737806
+data/apple_disease_classification/Test/Blotch_Apple/123.jpg,Blotch_Apple,Blotch_Apple,0.727355
+data/apple_disease_classification/Test/Scab_Apple/AnyConv.com__images (65).jpg,Scab_Apple,Scab_Apple,0.719041
